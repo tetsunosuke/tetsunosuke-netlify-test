@@ -1,0 +1,172 @@
+<html lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <!-- jQuery読み込み -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <!-- BootstrapのJS読み込み -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- tablednd読み込み -->
+    <script type="text/javascript" src="js/jquery.tablednd.0.7.min.js"></script>
+    <title></title>
+    <style>
+      .handle {
+        cursor: move;
+        position: relative;
+      }
+      .handle img {
+        min-width: 20px;
+        width: 20px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateY(-50%) translateX(-50%);
+        -webkit-transform: translateY(-50%) translateX(-50%);
+      }
+      .PlusBtn {
+        display: block;
+        margin: 10px auto;
+        width: 25px;
+        cursor: pointer;
+      }
+      .MinusBtn {
+        cursor: pointer;
+        position: relative;
+      }
+      .MinusBtn img {
+        min-width: 20px;
+        width: 20px;
+        position: absolute;
+        top: 50%; /*親要素を起点に上から50%*/
+        left: 50%; /*親要素を起点に左から50%*/
+        transform: translateY(-50%) translateX(-50%); /*要素の大きさの半分ずつを戻す*/
+        -webkit-transform: translateY(-50%) translateX(-50%);
+      }
+    </style>
+  </head>
+  <table class="table tablesorter-bootstrap table-management">
+    <thead>
+      <tr class="lead nodrop nodrag">
+        <th colspan="4"></th>
+        <th colspan="2" class="coupon">クーポン適応時</th>
+        <th colspan="1"></th>
+      </tr>
+      <tr class="title nodrop nodrag">
+        <th style="width: 5%"></th>
+        <th class="menu-name">メニュー名</th>
+        <th class="menu-time">時間（分）</th>
+        <th class="menu-fee">料金（税込）</th>
+        <th class="menu-time">時間（分）</th>
+        <th class="menu-fee">料金（税込）</th>
+        <th style="width: 5%"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <!-- 三本線の画像 -->
+        <td class="handle"><img src="../img/common/bars-solid.svg" /></td>
+        <td>
+          <span class="now_cnt">0</span
+          ><input
+            type="text"
+            name="menu_name[]"
+            placeholder="メニュー名"
+            class="m-form-text2 txt"
+            maxlength="25"
+          />
+        </td>
+        <td>
+          <input
+            type="text"
+            name="menu_time[]"
+            placeholder="時間"
+            class="m-form-text"
+          />
+        </td>
+        <td>
+          <input
+            type="text"
+            name="menu_price[]"
+            placeholder="料金"
+            class="m-form-text"
+          />
+        </td>
+        <td>
+          <input
+            type="text"
+            name="menu_time_coupon[]"
+            placeholder="クーポン時間"
+            class="m-form-text"
+          />
+        </td>
+        <td>
+          <input
+            type="text"
+            name="menu_price_coupon[]"
+            placeholder="クーポン料金"
+            class="m-form-text"
+          />
+        </td>
+        <!-- マイナスボタンの画像 -->
+        <td class="MinusBtn">
+          <img src="../img/common/circle-minus-solid.svg" alt="minus" />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- プラスボタンの画像 -->
+  <img class="PlusBtn" src="../img/common/circle-plus-solid.svg" alt="plus" />
+
+  <script>
+    //*********************************************//
+    //table-management
+    //*********************************************//
+    $(function () {
+      p_tableDnD();
+      p_tableShadow();
+      // プラスボタンクリック時
+      $(".PlusBtn").on("click", function () {
+        // 番下へスクロール
+        setTimeout(function () {
+          window.scroll(0, $(document).height());
+        }, 0);
+        $(".table-management tbody tr:first-child")
+          .clone(true)
+          .appendTo(".table-management tbody");
+        $(".table-management tbody tr:last-child td input").val("");
+        p_tableDnD();
+        p_tableShadow();
+      });
+      // マイナスボタンクリック時
+      $(".MinusBtn").on("click", function () {
+        // 行が2行以上あればクリックされた列を削除
+        if ($(".table-management tbody tr").length >= 2) {
+          $(this).parents("tr").remove();
+          p_tableDnD();
+          p_tableShadow();
+        }
+      });
+      // ドラッグアンドドロップ制御
+      function p_tableDnD() {
+        $(".table-management").tableDnD({
+          dragHandle: ".handle",
+        });
+      }
+      // ドラッグアンドドロップ時に影を付ける
+      function p_tableShadow() {
+        $(".table-management tbody tr .handle").mousedown(function () {
+          // 領域内で押した時
+          $(this).parents("tr").css("box-shadow", "2px 3px 6px 2px #9E9E9E");
+          return false;
+        });
+        $(" * ").mouseup(function () {
+          // 離した時
+          $(".table-management tbody tr").css("box-shadow", "none");
+        });
+      }
+    });
+  </script>
+</html>
