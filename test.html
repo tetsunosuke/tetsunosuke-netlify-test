@@ -136,6 +136,15 @@
     $(function () {
       p_tableDnD();
       p_tableShadow();
+
+      $(".PlusBtn").on("click", function () {
+        $(".table-management tbody tr:first-child")
+          .clone(true)
+          .appendTo(".table-management tbody");
+        $(".table-management tbody tr:last-child td input").val("");
+        p_tableDnD();
+        p_tableShadow();
+      });
     });
   </script>
 </html>
