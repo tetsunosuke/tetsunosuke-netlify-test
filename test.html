@@ -1,0 +1,141 @@
+<html lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <!-- jQuery読み込み -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <!-- BootstrapのJS読み込み -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- tablednd読み込み -->
+    <script src="https://raw.githubusercontent.com/isocra/TableDnD/master/dist/jquery.tablednd.js"></script>
+    <!--
+    <script type="text/javascript" src="js/jquery.tablednd.0.7.min.js"></script>
+-->
+    <!--    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/TableDnD/0.9.1/jquery.tablednd.js"
+      integrity="sha256-d3rtug+Hg1GZPB7Y/yTcRixO/wlI78+2m08tosoRn7A="
+      crossorigin="anonymous"
+    ></script>
+-->
+    <title></title>
+    <style>
+      .handle {
+        cursor: move;
+        position: relative;
+      }
+      .handle img {
+        min-width: 20px;
+        width: 20px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateY(-50%) translateX(-50%);
+        -webkit-transform: translateY(-50%) translateX(-50%);
+      }
+      .PlusBtn {
+        display: block;
+        margin: 10px auto;
+        width: 25px;
+        cursor: pointer;
+      }
+      .MinusBtn {
+        cursor: pointer;
+        position: relative;
+      }
+      .MinusBtn img {
+        min-width: 20px;
+        width: 20px;
+        position: absolute;
+        top: 50%; /*親要素を起点に上から50%*/
+        left: 50%; /*親要素を起点に左から50%*/
+        transform: translateY(-50%) translateX(-50%); /*要素の大きさの半分ずつを戻す*/
+        -webkit-transform: translateY(-50%) translateX(-50%);
+      }
+    </style>
+  </head>
+  <table class="table tablesorter-bootstrap table-management">
+    <thead>
+      <tr class="lead nodrop nodrag">
+        <th colspan="4"></th>
+        <th colspan="2" class="coupon">クーポン適応時</th>
+        <th colspan="1"></th>
+      </tr>
+      <tr class="title nodrop nodrag">
+        <th style="width: 5%"></th>
+        <th class="menu-name">メニュー名</th>
+        <th class="menu-time">時間（分）</th>
+        <th class="menu-fee">料金（税込）</th>
+        <th class="menu-time">時間（分）</th>
+        <th class="menu-fee">料金（税込）</th>
+        <th style="width: 5%"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <!-- 三本線の画像 -->
+        <td class="handle"><img src="../img/common/bars-solid.svg" /></td>
+        <td>
+          <span class="now_cnt">0</span
+          ><input
+            type="text"
+            name="menu_name[]"
+            placeholder="メニュー名"
+            class="m-form-text2 txt"
+            maxlength="25"
+          />
+        </td>
+        <td>
+          <input
+            type="text"
+            name="menu_time[]"
+            placeholder="時間"
+            class="m-form-text"
+          />
+        </td>
+        <td>
+          <input
+            type="text"
+            name="menu_price[]"
+            placeholder="料金"
+            class="m-form-text"
+          />
+        </td>
+        <td>
+          <input
+            type="text"
+            name="menu_time_coupon[]"
+            placeholder="クーポン時間"
+            class="m-form-text"
+          />
+        </td>
+        <td>
+          <input
+            type="text"
+            name="menu_price_coupon[]"
+            placeholder="クーポン料金"
+            class="m-form-text"
+          />
+        </td>
+        <!-- マイナスボタンの画像 -->
+        <td class="MinusBtn">
+          <img src="../img/common/circle-minus-solid.svg" alt="minus" />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- プラスボタンの画像 -->
+  <img class="PlusBtn" src="../img/common/circle-plus-solid.svg" alt="plus" />
+
+  <script>
+    //*********************************************//
+    //table-management
+    //*********************************************//
+    $(function () {
+      p_tableDnD();
+      p_tableShadow();
+    });
+  </script>
+</html>
